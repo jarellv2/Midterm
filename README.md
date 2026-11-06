@@ -7,8 +7,8 @@
 ---
 
 ### Description
-Object-Oriented Programming is implemented across 4 C# scripts (`GameManager.cs`, `Fruit_Apple.cs`, `FruitSpawner_Apple.cs`, and `SnakeController2D.cs`) following the course lecture architecture:
-* **Inheritance:** `FruitBase` serves as the base parent class (Product Interface) containing the virtual `Collect()` method. `Fruit_Apple` inherits from `FruitBase` (`Fruit_Apple : FruitBase`), and `FruitSpawner_Apple` inherits from the base `FruitSpawner` creator class (`FruitSpawner_Apple : FruitSpawner`). Additionally, both `GameManager` and `ScoreManager` inherit from the generic `Singleton<T>` template base class.
+OOP is implemented across 4 C# scripts (`GameManager.cs`, `Fruit_Apple.cs`, `FruitSpawner_Apple.cs`, and `SnakeController2D.cs`) following the course lecture architecture:
+* **Inheritance:** `FruitBase` serves as the base parent class (Product Interface) with the virtual `Collect()` method. `Fruit_Apple` inherits from `FruitBase` (`Fruit_Apple : FruitBase`), and `FruitSpawner_Apple` inherits from the base `FruitSpawner` creator class (`FruitSpawner_Apple : FruitSpawner`). Additionally, both `GameManager` and `ScoreManager` inherit from the generic `Singleton<T>` template base class.
 * **Polymorphism:** `FruitBase` defines a `public virtual void Collect()` method, which the derived class `Fruit_Apple` overrides using `public override void Collect()` to award 100 points via `ScoreManager.Instance.AddScore(100)`, log the collection event, and destroy the fruit GameObject when `SnakeController2D` triggers `fruit.Collect()` inside `OnTriggerEnter2D`.
 
 ## UML Diagram
@@ -69,11 +69,11 @@ classDiagram
 ---
 
 ### Purpose
-The Singleton pattern restricts the instantiation of a class to a single global object and provides a global point of access to it. In this 2D Snake game, a Singleton is used for managing global game state (`GameManager`) and tracking persistent score (`ScoreManager`). Because `Fruit_Apple` instances are dynamically instantiated and destroyed at runtime by the Factory, they cannot hold manual Inspector references to scene managers. Using the Singleton pattern allows spawned fruit and `SnakeController2D` to safely update the score and trigger the next spawn event globally without tight scene coupling.
+The Singleton pattern sets the instantiation of a class to a single global object and gives a global point of access to it. In this 2D Snake game, a Singleton is used for managing global game state (`GameManager`) and tracking score (`ScoreManager`). Because the `Fruit_Apple` instances are dynamically instantiated and destroyed at runtime by the Factory, they cannot hold manual Inspector references to scene managers. Using the Singleton pattern allows spawned fruit and `SnakeController2D` to safely update the score and trigger the next spawn event globally without tight scene coupling.
 
 ### Implementation
 Implemented in `GameManager.cs` using the generic C# template class `Singleton<T> : MonoBehaviour where T : Component` in **2 places** as required by the rubric:
-1. **`ScoreManager : Singleton<ScoreManager>`:** Manages `TotalScore` and implements `AddScore(int Points)`, `GetScore()`, and `ResetScore()`. Accessed globally via `ScoreManager.Instance.AddScore(100)` inside `Fruit_Apple.Collect()` and read by `GameManager` to display the UI score.
+1. **`ScoreManager : Singleton<ScoreManager>`:** Manages `TotalScore` and implements `AddScore(int Points)`, `GetScore()`, and `ResetScore()`. Accessed globally via `ScoreManager.Instance.AddScore(100)` inside `Fruit_Apple.Collect()`, and `GameManager` uses it to display the UI score.
 2. **`GameManager : Singleton<GameManager>`:** Holds the `FruitSpawnerRef` reference and High Score challenge state. Accessed globally via `GameManager.Instance.OnFruitEaten()` inside `SnakeController2D.OnTriggerEnter2D()` whenever the snake eats a fruit.
 
 ---
