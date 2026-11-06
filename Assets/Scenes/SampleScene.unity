@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602743d5e6563c346ac8a83f0084b68e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  FruitSpawnerRef: {fileID: 0}
+  FruitSpawnerRef: {fileID: 1029198557}
   HighScoreGoal: 500
 --- !u!1 &1380210350
 GameObject:
